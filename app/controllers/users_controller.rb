@@ -18,7 +18,11 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new
+    if current_user
+      redirect_to(root_url)
+    else  
+      @user = User.new
+    end
   end
   
   def update
@@ -37,6 +41,10 @@ class UsersController < ApplicationController
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
+    elsif
+      current_user
+        redirect_to(root_url)
+      
     else
       render 'new'
     end
