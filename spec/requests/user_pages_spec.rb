@@ -61,6 +61,14 @@ describe "User pages" do
     it { should have_content(user.name) }
     it { should have_title(user.name) }
     
+    it "should render the user's feed" do
+        user.feed.each do |item|
+          expect(page).to have_selector("li##{item.id}", text: item.content)
+        end
+      end
+
+      
+    
     describe "microposts" do
       it { should have_content(m1.content) }
       it { should have_content(m2.content) }
